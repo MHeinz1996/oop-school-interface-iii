@@ -1,25 +1,20 @@
-import csv 
-import os.path
 from classes.person import Person
+import csv
 
 class Student(Person):
-
-    def __init__(self, name, age, password, role, school_id):
-        super().__init__(name, age, password, role)
+    def __init__(self, name, age, role, password, school_id) -> None:
+        super().__init__(name, age, role, password)
         self.school_id = school_id
 
-    def __str__(self):
-        return f'\n{self.name.upper()}\n---------------\nage: {self.age}\nid: {self.school_id}\n'
+    def __str__(self) -> str:
+        return f"\n{self.name.capitalize()}\n---------------\nage: {self.age}\nid: {self.school_id}"
 
-    @classmethod
-    def objects(cls):
-        students = []
-        my_path = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(my_path, "../data/students.csv")
-
-        with open(path) as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                students.append(Student(**dict(row)))
-
+    @staticmethod
+    def all_students():
+        # return contents of student.csv
+        with open('data/students.csv', newline='') as file:
+            csv_reader = csv.DictReader(file, skipinitialspace=True)
+            students = [row for row in csv_reader]
+            file.close()
+        
         return students

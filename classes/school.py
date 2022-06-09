@@ -1,18 +1,21 @@
-from classes.staff import Staff
 from classes.student import Student
+from classes.staff import Staff
 
 class School:
-    def __init__(self, name):
+    def __init__(self, name) -> None:
         self.name = name
-        self.staff = Staff.objects()
-        self.students = Student.objects()
+        self.students = Student.all_students()
+        self.staff = Staff.all_staff()
 
-    def list_students(self):
-        print('\n')
+    def __str__(self) -> str:
+        print(f"{self.name.upper()}")
+
+    def list_students(self) -> str:
+        print("\nAll students:\n---------------")
         for i, student in enumerate(self.students):
-            print(f'{i + 1}. {student.name} {student.school_id}')
+            print(f"{i+1}. {student['name'].capitalize()} {student['school_id']}")
 
-    def find_student_by_id(self, student_id):
+    def find_student_by_id(self, student_id) -> str:
         for student in self.students:
-            if student.school_id == student_id:
+            if(student['school_id'] == student_id):
                 return student
