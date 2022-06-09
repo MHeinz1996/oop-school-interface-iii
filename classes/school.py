@@ -22,9 +22,12 @@ class School:
 
     def add_student(self, student_data):
         new_student = Student(student_data['name'], student_data['age'], student_data['role'], student_data['password'], student_data['school_id'])
-        self.students.append(new_student)
-        return self.list_students()
+        self.students.append({'name': new_student.name, 'age': new_student.age, 'role': new_student.role, 'password': new_student.password, 'school_id': new_student.school_id})
+        return f"\nSuccessfully added student:\n{str(new_student)}"
 
 
     def remove_student(self, student_id):
-        pass
+        for i,student in enumerate(self.students):
+            if student['school_id'] == student_id:
+                self.students.remove(self.students[i])
+                return f"\nSuccessfully removed student {student_id}"
